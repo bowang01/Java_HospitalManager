@@ -27,7 +27,7 @@ public class TodayUtil {
         String result = format.format(today);
         return result;
     }
-    //获取过去的第past天
+    // Get the date of the past-th day
     public static String getPastDate(int past) {
         Calendar calendar = Calendar.getInstance();
         //System.out.println(calendar.get(Calendar.DAY_OF_YEAR));

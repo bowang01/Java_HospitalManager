@@ -15,7 +15,7 @@ public class AdminServiceImpl implements AdminService {
     private AdminMapper adminMapper;
 
     /**
-     * 登录数据校验
+     * Login validation
      * */
     @Override
     public Admin login(int aId, String aPassword){

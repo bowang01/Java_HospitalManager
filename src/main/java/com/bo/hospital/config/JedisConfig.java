@@ -35,7 +35,7 @@ public class JedisConfig {
     private boolean testOnBorrow;
 
     /**
-     * spring容器创建一个内存中实例，名字和name值相同
+     * Spring container creates an in-memory instance with the same name as the name value
      * @return
      */
     @Bean(name = "jedisPoolConfig")
@@ -50,7 +50,7 @@ public class JedisConfig {
     }
 
     /***
-     * 获得连接池对象，@Qualifier(value = "jedisPoolConfig")指定参数按名称严格匹配注入
+     * Get the connection pool object; @Qualifier(value = "jedisPoolConfig") injects by name
      * @param jedisPoolConfig
      * @return
      */

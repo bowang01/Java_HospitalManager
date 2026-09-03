@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface ArrangeService {
     /**
-     * 根据日期查询排班信息
+     * Find schedules by date
      */
     List<Arrange> findByTime(String arTime, String dSection);
     /**
-     * 增加排班信息
+     * Add schedule
      */
     Boolean addArrange(Arrange arrange);
     /**
-     * 删除排班信息
+     * Delete schedule
      */
     Boolean deleteArrange(String arId);
 }

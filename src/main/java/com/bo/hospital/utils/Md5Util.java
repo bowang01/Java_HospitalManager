@@ -4,7 +4,7 @@ import org.springframework.util.DigestUtils;
 
 public class Md5Util {
 
-    //盐，用于混交md5
+    // salt for MD5
     private static String salt = "asdwqAsd12_qS";
 
     public static String getMD5(String str) {

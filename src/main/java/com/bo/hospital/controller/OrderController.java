@@ -15,56 +15,56 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
     /**
-     * 根据id更新挂号信息
+     * Update appointment by id
      */
     @PostMapping("updateOrder")
     public ResponseData updateOrder(@RequestBody Orders orders) {
         if (this.orderService.updateOrder(orders))
-            return ResponseData.success("更新挂号信息成功");
+            return ResponseData.success("Appointment updated");
 
-        return ResponseData.fail("更新挂号信息失败！");
+        return ResponseData.fail("Failed to update appointment");
     }
     /**
-     * 根据id设置缴费状态
+     * Set payment status by id
      */
     @RequestMapping("updatePrice")
     public ResponseData updatePrice(int oId){
         if (this.orderService.updatePrice(oId))
-        return ResponseData.success("根据id设置缴费状态成功");
-        return ResponseData.success("根据id设置缴费状态失败");
+        return ResponseData.success("Payment status updated");
+        return ResponseData.success("Failed to update payment status");
     }
     /**
-     * 查找医生已完成的挂号单
+     * Find doctor's completed appointments
      */
     @RequestMapping("findOrderFinish")
     public ResponseData findOrderFinish(int pageNumber, int size, String query, int dId){
-        return ResponseData.success("查找医生已完成的挂号单完成！", this.orderService.findOrderFinish(pageNumber, size, query, dId));
+        return ResponseData.success("Completed appointments loaded", this.orderService.findOrderFinish(pageNumber, size, query, dId));
     }
     /**
-     * 根据dId查询挂号
+     * Find appointments by dId
      */
     @RequestMapping("findOrderByDid")
     public ResponseData findOrderByDid(int pageNumber, int size, String query, int dId){
-        return ResponseData.success("返回挂号信息成功", this.orderService.findOrderByDid(pageNumber, size, query, dId)) ;
+        return ResponseData.success("Appointments loaded", this.orderService.findOrderByDid(pageNumber, size, query, dId)) ;
     }
     /**
-     * 统计今天挂号人数
+     * Count today's appointments
      */
     @RequestMapping("orderPeople")
     public ResponseData oderPeople(){
         String oStart = TodayUtil.getTodayYmd();
-        return ResponseData.success("统计今天挂号人数成功", this.orderService.orderPeople(oStart));
+        return ResponseData.success("Today's appointment count loaded", this.orderService.orderPeople(oStart));
     }
     /**
-     * 统计今天某个医生挂号人数
+     * Count today's appointments for a doctor
      */
     @RequestMapping("orderPeopleByDid")
     public ResponseData orderPeopleByDid(int dId){
         String oStart = TodayUtil.getTodayYmd();
-        return ResponseData.success("统计今天挂号人数成功", this.orderService.orderPeopleByDid(oStart, dId));
+        return ResponseData.success("Today's appointment count loaded", this.orderService.orderPeopleByDid(oStart, dId));
     }
     /**
-     * 获取近二十天的挂号人数
+     * Get appointment counts for the last 20 days
      */
     @RequestMapping("orderSeven")
     public ResponseData orderSeven(){
@@ -75,47 +75,47 @@ public class OrderController {
             int people = this.orderService.orderPeople(oStart);
             list.add(people);
         }
-        return ResponseData.success("获取近20天的挂号人数成功", list);
+        return ResponseData.success("Last 20 days appointment counts loaded", list);
     }
     /**
-     * 统计挂号男女人数
+     * Count appointment gender stats
      */
     @RequestMapping("orderGender")
     public ResponseData orderGender(){
-        return ResponseData.success("统计挂号男女人数", this.orderService.orderGender());
+        return ResponseData.success("Appointment gender stats loaded", this.orderService.orderGender());
     }
     /**
-     * 增加诊断及医生意见
+     * Add diagnosis and doctor notes
      */
     @PostMapping("updateOrderByAdd")
     public ResponseData updateOrderByAdd(@RequestBody Orders order){
         if (this.orderService.updateOrderByAdd(order))
-            return ResponseData.success("增加诊断及医生意见成功");
-        return ResponseData.fail("增加诊断及医生意见失败");
+            return ResponseData.success("Diagnosis saved");
+        return ResponseData.fail("Failed to save diagnosis");
     }
     /**
-     * 判断诊断之后再次购买药物是否已缴费
+     * Check whether extra drugs after diagnosis have been paid
      */
     @RequestMapping("findTotalPrice")
     public ResponseData findTotalPrice(int oId){
        if(this.orderService.findTotalPrice(oId))
-           return ResponseData.success("未缴费");
-       return ResponseData.fail("无需缴费");
+           return ResponseData.success("Unpaid");
+       return ResponseData.fail("No payment needed");
     }
     /**
-     * 请求挂号时间段
+     * Request appointment time slots
      */
     @RequestMapping("findOrderTime")
     public ResponseData findOrderTime(String arId){
-        return ResponseData.success("请求挂号时间段成功", this.orderService.findOrderTime(arId));
+        return ResponseData.success("Time slots loaded", this.orderService.findOrderTime(arId));
 
     }
     /**
-     * 统计过去20天挂号科室人数
+     * Count department appointments for the last 20 days
      */
     @RequestMapping("orderSection")
     public ResponseData orderSection(){
-        return ResponseData.success("统计近20天挂号科室人数成功", this.orderService.orderSection());
+        return ResponseData.success("Department appointment stats loaded", this.orderService.orderSection());
     }
 
 }

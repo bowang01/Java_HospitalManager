@@ -10,51 +10,51 @@ import java.util.List;
 
 public interface DoctorService {
     /**
-     * 登录数据校验
+     * Login validation
      * */
     Doctor login(int dId, String dPassword);
     /**
-     * 分页模糊查询所有医生信息
+     * Paginated fuzzy search of all doctors
      */
     HashMap<String, Object> findAllDoctors(int pageNumber, int size, String query);
     /**
-     * 根据id查找医生
+     * Find doctor by id
      */
     Doctor findDoctor(int dId);
     /**
-     * 增加医生信息
+     * Add doctor
      */
     Boolean addDoctor(Doctor doctor);
     /**
-     * 删除医生信息
+     * Delete doctor
      */
     Boolean deleteDoctor(int dId);
     /**
-     * 修改医生信息
+     * Update doctor
      */
     Boolean modifyDoctor(Doctor doctor);
     /**
-     * 根据科室查询所有医生信息
+     * Find all doctors by department
      */
      HashMap<String, Object> findDoctorBySection(String dSection);
     /**
-     * 分页根据科室查询所有医生信息
+     * Paginated find all doctors by department
      */
     HashMap<String, Object> findDoctorBySectionPage(int pageNumber, int size, String query, String arrangeDate, String dSection);
     /**
-     * 用户评价
+     * User rating
      */
     Boolean updateStar(int dId, Double dStar);
     /**
-     * 上传Excel导入数据
+     * Upload Excel and import data
      */
     Boolean uploadExcel(MultipartFile multipartFile) throws Exception;
     /**
-     * Excel导出数据
+     * Export Excel data
      */
     Boolean downloadExcel(HttpServletResponse response) throws IOException;
     /**
-     * 查询所有医生不分页
+     * Find all doctors without pagination
      */
     List<Doctor> findAll();
 

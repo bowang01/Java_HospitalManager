@@ -7,39 +7,39 @@ import java.util.List;
 
 public interface BedService {
     /**
-     * 查找所有空床位
+     * Find all empty beds
      */
     List<Bed> findNullBed();
     /**
-     * 更新床位信息
+     * Update bed info
      */
     Boolean updateBed(Bed bed);
     /**
-     * 根据pId查询住院信息
+     * Find inpatient record by pId
      */
     List<Bed> findBedByPid(int pId);
     /**
-     * 分页模糊查询所有床位信息
+     * Paginated fuzzy search of all beds
      */
     HashMap<String, Object> findAllBeds(int pageNumber, int size, String query);
     /**
-     * 根据id查找床位
+     * Find bed by id
      */
     Bed findBed(int bId);
     /**
-     * 增加床位信息
+     * Add bed info
      */
     Boolean addBed(Bed bed);
     /**
-     * 删除床位信息
+     * Delete bed
      */
     Boolean deleteBed(int bId);
     /**
-     * 清空床位信息
+     * Clear bed info
      */
     Boolean emptyBed(int bId);
     /**
-     * 统计今天住院人数
+     * Count today's inpatients
      */
     int bedPeople(String bStart);
 }

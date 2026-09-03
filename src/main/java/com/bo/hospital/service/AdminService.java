@@ -4,7 +4,7 @@ import com.bo.hospital.pojo.Admin;
 
 public interface AdminService {
     /**
-     * 登录数据校验
+     * Login validation
      * */
     Admin login(int aId, String aPassword);
 }

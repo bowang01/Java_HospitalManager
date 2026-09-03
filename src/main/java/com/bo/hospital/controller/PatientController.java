@@ -35,7 +35,7 @@ public class PatientController {
     private OrderMapper orderMapper;
 
     /**
-     * 登录数据验证
+     * Login validation
      */
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ResponseData login(@RequestParam(value = "pId") int pId, @RequestParam(value = "pPassword") String pPassword) {
@@ -48,46 +48,46 @@ public class PatientController {
             String token = JwtUtil.getToken(map);
             map.put("token", token);
             //response.setHeader("token", token);
-            return ResponseData.success("登录成功", map);
+            return ResponseData.success("Login successful", map);
         } else {
-            return ResponseData.fail("登录失败，密码或账号错误");
+            return ResponseData.fail("Login failed: incorrect account or password");
         }
     }
     /**
-     * 根据科室查询所有医生信息
+     * Find all doctors by department
      */
     @RequestMapping("findDoctorBySection")
     public ResponseData findDoctorBySection(@RequestParam(value = "dSection") String dSection){
-        return ResponseData.success("根据科室查询所有医生信息成功", this.doctorService.findDoctorBySection(dSection));
+        return ResponseData.success("Doctors by department loaded", this.doctorService.findDoctorBySection(dSection));
     }
     /**
-     * 增加挂号信息
+     * Add appointment
      */
     @RequestMapping("addOrder")
     public ResponseData addOrder(Orders order, String arId){
         System.out.println(arId);
         if (this.orderService.addOrder(order, arId))
-        return ResponseData.success("插入挂号信息成功");
-        return ResponseData.fail("插入挂号信息失败");
+        return ResponseData.success("Appointment created");
+        return ResponseData.fail("Failed to create appointment");
     }
     /**
-     * 根据pId查询挂号
+     * Find appointments by pId
      */
     @RequestMapping("findOrderByPid")
     public ResponseData findOrderByPid(@RequestParam(value = "pId") int pId){
-        return ResponseData.success("返回挂号信息成功", this.orderService.findOrderByPid(pId)) ;
+        return ResponseData.success("Appointments loaded", this.orderService.findOrderByPid(pId)) ;
     }
 
     /**
-     * 增加患者信息
+     * Add patient
      */
     @RequestMapping("addPatient")
     public ResponseData addPatient(Patient patient) {
         Boolean bo = this.patientService.addPatient(patient);
         if (bo) {
-            return ResponseData.success("注册成功");
+            return ResponseData.success("Registered successfully");
         }
-        return ResponseData.fail("注册失败！账号或邮箱已被占用");
+        return ResponseData.fail("Registration failed: account or email taken");
     }
 
     @GetMapping("/pdf")
@@ -96,11 +96,11 @@ public class PatientController {
         PdfUtil.ExportPdf(request, response, order);
     }
     /**
-     * 统计患者男女人数
+     * Count patient gender stats
      */
     @RequestMapping("patientAge")
     public ResponseData patientAge(){
-        return  ResponseData.success("统计患者男女人数成功", this.patientService.patientAge());
+        return  ResponseData.success("Patient age stats loaded", this.patientService.patientAge());
 
     }
 }

@@ -24,9 +24,9 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     private OrderMapper orderMapper;
     @Autowired
-    private JedisPool jedisPool;//redis连接池
+    private JedisPool jedisPool;// Redis connection pool
     /**
-     * 分页模糊查询所有挂号信息
+     * Paginated fuzzy search of all appointments
      */
     @Override
     public HashMap<String, Object> findAllOrders(int pageNumber, int size, String query) {
@@ -35,15 +35,15 @@ public class OrderServiceImpl implements OrderService {
         wrapper.like("p_id", query);
         IPage<Orders> iPage = this.orderMapper.selectPage(page, wrapper);
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("total", iPage.getTotal());       //总条数
-        hashMap.put("pages", iPage.getPages());       //总页数
-        hashMap.put("pageNumber", iPage.getCurrent());//当前页
-        hashMap.put("orders", iPage.getRecords()); //查询到的记录
+        hashMap.put("total", iPage.getTotal());       // total count
+        hashMap.put("pages", iPage.getPages());       // total pages
+        hashMap.put("pageNumber", iPage.getCurrent());// current page
+        hashMap.put("orders", iPage.getRecords()); // records
         return hashMap;
     }
 
     /**
-     * 删除挂号信息
+     * Delete appointment
      */
     @Override
     public Boolean deleteOrder(int oId) {
@@ -51,11 +51,11 @@ public class OrderServiceImpl implements OrderService {
         return true;
     }
     /**
-     * 增加挂号信息
+     * Add appointment
      */
     @Override
     public Boolean addOrder(Orders order, String arId){
-        //redis开始
+        // Redis start
         Jedis jedis = jedisPool.getResource();
         String time = order.getOStart().substring(11, 22);
         synchronized (this) {
@@ -92,7 +92,7 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         jedis.close();
-        //redis结束
+        // Redis end
         order.setOId(RandomUtil.randomOid(order.getPId()));
         order.setOState(0);
         order.setOPriceState(0);
@@ -101,21 +101,21 @@ public class OrderServiceImpl implements OrderService {
         return true;
     }
     /**
-     * 根据pId查询挂号
+     * Find appointments by pId
      */
     public List<Orders> findOrderByPid(int pId){
 
         return this.orderMapper.findOrderByPid(pId);
     }
     /**
-     * 查看当天挂号列表
+     * Find today's appointment list
      */
     @Override
     public List<Orders> findOrderByNull(int dId, String oStart){
         return this.orderMapper.findOrderByNull(dId, oStart);
     }
     /**
-     * 根据id更新挂号信息
+     * Update appointment by id
      */
     @Override
     public Boolean updateOrder(Orders orders) {
@@ -127,22 +127,22 @@ public class OrderServiceImpl implements OrderService {
         return true;
     }
     /**
-     * 根据id设置缴费状态
+     * Set payment status by id
      */
     @Override
     public Boolean updatePrice(int oId){
         /**
-         * 用QueryWrapper如果不把外键的值也传进来，会报错
-         * 用UpdateWrapper就正常
+         * QueryWrapper errors unless foreign key values are also passed in
+         * UpdateWrapper works normally
          */
         UpdateWrapper<Orders> wrapper = new UpdateWrapper<>();
         wrapper.eq("o_id", oId).set("o_price_state", 1).set("o_total_price", 0.00);
         int i = this.orderMapper.update(null, wrapper);
-        System.out.println("影响行数"+i);
+        System.out.println("affected rows "+i);
         return true;
     }
     /**
-     * 查找医生已完成的挂号单
+     * Find doctor's completed appointments
      */
     @Override
     public HashMap<String, Object> findOrderFinish(int pageNumber, int size, String query, int dId){
@@ -151,15 +151,15 @@ public class OrderServiceImpl implements OrderService {
         wrapper.like("p_id", query).eq("d_id", dId).orderByDesc("o_start").eq("o_state", 1);
         IPage<Orders> iPage = this.orderMapper.selectPage(page, wrapper);
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("total", iPage.getTotal());       //总条数
-        hashMap.put("pages", iPage.getPages());       //总页数
-        hashMap.put("pageNumber", iPage.getCurrent());//当前页
-        hashMap.put("orders", iPage.getRecords()); //查询到的记录
+        hashMap.put("total", iPage.getTotal());       // total count
+        hashMap.put("pages", iPage.getPages());       // total pages
+        hashMap.put("pageNumber", iPage.getCurrent());// current page
+        hashMap.put("orders", iPage.getRecords()); // records
 
         return hashMap;
     }
     /**
-     * 根据dId查询挂号
+     * Find appointments by dId
      */
     public HashMap<String, Object> findOrderByDid(int pageNumber, int size, String query, int dId){
         Page<Orders> page = new Page<>(pageNumber, size);
@@ -167,34 +167,34 @@ public class OrderServiceImpl implements OrderService {
         wrapper.like("p_id", query).eq("d_id", dId).orderByDesc("o_start");
         IPage<Orders> iPage = this.orderMapper.selectPage(page, wrapper);
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("total", iPage.getTotal());       //总条数
-        hashMap.put("pages", iPage.getPages());       //总页数
-        hashMap.put("pageNumber", iPage.getCurrent());//当前页
-        hashMap.put("orders", iPage.getRecords()); //查询到的记录
+        hashMap.put("total", iPage.getTotal());       // total count
+        hashMap.put("pages", iPage.getPages());       // total pages
+        hashMap.put("pageNumber", iPage.getCurrent());// current page
+        hashMap.put("orders", iPage.getRecords()); // records
         return hashMap;
     }
     /**
-     * 统计今天挂号人数
+     * Count today's appointments
      */
     @Override
     public int orderPeople(String oStart){
         return this.orderMapper.orderPeople(oStart);
     }
     /**
-     * 统计今天某个医生挂号人数
+     * Count today's appointments for a doctor
      */
     @Override
     public int orderPeopleByDid(String oStart, int dId){
         return this.orderMapper.orderPeopleByDid(oStart, dId);
     }
     /**
-     * 统计挂号男女人数
+     * Count appointment gender stats
      */
     public List<String> orderGender(){
         return this.orderMapper.orderGender();
     }
     /**
-     * 增加诊断及医生意见
+     * Add diagnosis and doctor notes
      */
     public Boolean updateOrderByAdd(Orders order){
 
@@ -205,7 +205,7 @@ public class OrderServiceImpl implements OrderService {
         return true;
     }
     /**
-     * 判断诊断之后再次购买药物是否已缴费
+     * Check whether extra drugs after diagnosis have been paid
      */
     public Boolean findTotalPrice(int oId){
         Orders order = this.orderMapper.selectById(oId);
@@ -217,7 +217,7 @@ public class OrderServiceImpl implements OrderService {
         return false;
     }
     /**
-     * 请求挂号时间段
+     * Request appointment time slots
      */
     @Override
     public HashMap<String, String> findOrderTime(String arId){
@@ -247,7 +247,7 @@ public class OrderServiceImpl implements OrderService {
         return map;
     }
     /**
-     * 统计近20天挂号科室人数
+     * Count department appointments for the last 20 days
      */
     @Override
     public List<String> orderSection(){

@@ -26,7 +26,7 @@ public class PatientServiceImpl implements PatientService {
 
 
     /**
-     * 登录数据校验
+     * Login validation
      */
     @Override
     public Patient login(int pId, String pPassword) {
@@ -42,7 +42,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     /**
-     * 分页模糊查询所有患者信息
+     * Paginated fuzzy search of all patients
      */
     @Override
     public HashMap<String, Object> findAllPatients(int pageNumber, int size, String query) {
@@ -51,15 +51,15 @@ public class PatientServiceImpl implements PatientService {
         wrapper.like("p_name", query).eq("p_state", 1);
         IPage<Patient> iPage = this.patientMapper.selectPage(page, wrapper);
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("total", iPage.getTotal());       //总条数
-        hashMap.put("pages", iPage.getPages());       //总页数
-        hashMap.put("pageNumber", iPage.getCurrent());//当前页
-        hashMap.put("patients", iPage.getRecords()); //查询到的记录
+        hashMap.put("total", iPage.getTotal());       // total count
+        hashMap.put("pages", iPage.getPages());       // total pages
+        hashMap.put("pageNumber", iPage.getCurrent());// current page
+        hashMap.put("patients", iPage.getRecords()); // records
         return hashMap;
     }
 
     /**
-     * 删除患者信息
+     * Delete patient
      */
     @Override
     public Boolean deletePatient(int pId) {
@@ -71,7 +71,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     /**
-     * 根据患者id查询患者信息
+     * Find patient info by patient id
      */
     @Override
     public Patient findPatientById(int pId) {
@@ -81,11 +81,11 @@ public class PatientServiceImpl implements PatientService {
     }
 
     /**
-     * 增加患者信息
+     * Add patient
      */
     @Override
     public Boolean addPatient(Patient patient) {
-        //如果账号已存在则返回false
+        // return false if account already exists
         List<Patient> patients = this.patientMapper.selectList(null);
         for (Patient patient1 : patients) {
             if (patient.getPId() == patient1.getPId()) {
@@ -97,7 +97,7 @@ public class PatientServiceImpl implements PatientService {
         }
         int yourYear = Integer.parseInt(patient.getPBirthday().substring(0, 4));
         int todayYear = Integer.parseInt(TodayUtil.getTodayYmd().substring(0, 4));
-        //密码md5加密
+        // encrypt password
         String password = Md5Util.getMD5(patient.getPPassword());
         patient.setPPassword(password);
         patient.setPAge(todayYear - yourYear);
@@ -107,7 +107,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     /**
-     * 统计患者男女人数
+     * Count patient gender stats
      */
     public List<Integer> patientAge() {
         List<Integer> ageList = new ArrayList<>();

@@ -1,14 +1,14 @@
 server:
   servlet:
     context-path: /hospital
-  port: 9281
+  port: 9092
 
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    #url: jdbc:mysql://127.0.0.1:3306/hospital_manager?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://127.0.0.1:3306/hospital_manager?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
-    #password: root
+    password: root
 
 mybatis-plus:
   mapper-locations: classpath*:mybatis/*.xml

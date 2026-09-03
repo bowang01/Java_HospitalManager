@@ -14,53 +14,53 @@ import java.io.Serializable;
 public class Doctor implements Serializable {
     @JsonProperty("dId")
     @TableId(value = "d_id")
-    @Excel(name = "账号")
+    @Excel(name = "Account")
     private Integer dId;
     @JsonProperty("dPassword")
-    @Excel(name = "密码")
+    @Excel(name = "Password")
     private String dPassword;
     @JsonProperty("dName")
-    @Excel(name = "姓名")
+    @Excel(name = "Name")
     private String dName;
     @JsonProperty("dGender")
-    @Excel(name = "性别")
+    @Excel(name = "Gender")
     private String dGender;
     @JsonProperty("dCard")
-    @Excel(name = "身份证号码")
+    @Excel(name = "ID Number")
     private String dCard;
     @JsonProperty("dEmail")
-    @Excel(name = "邮箱")
+    @Excel(name = "Email")
     private String dEmail;
     @JsonProperty("dPhone")
-    @Excel(name = "手机号")
+    @Excel(name = "Phone")
     private String dPhone;
     @JsonProperty("dPost")
-    @Excel(name = "职位")
+    @Excel(name = "Position")
     private String dPost;
     @JsonProperty("dIntroduction")
-    @Excel(name = "简介")
+    @Excel(name = "Introduction")
     private String dIntroduction;
     @JsonProperty("dSection")
-    @Excel(name = "科室")
+    @Excel(name = "Department")
     private String dSection;
     @JsonProperty("dState")
-    @Excel(name = "是否在职", replace = {"在职_1","离职_0"})
-    private Integer dState;//必须为integer类型，为int类型的话更新时会自动更新为0
+    @Excel(name = "On Duty", replace = {"On Duty_1","Resigned_0"})
+    private Integer dState;// must be Integer; int would reset to 0 on update
     @JsonProperty("dPrice")
-    @Excel(name = "挂号价格")
+    @Excel(name = "Appointment Price")
     private Double dPrice;
     @JsonProperty("dPeople")
-    @Excel(name = "评价人数")
-    private Integer dPeople;//必须为integer类型，为int类型的话更新时会自动更新为0
+    @Excel(name = "Rating Count")
+    private Integer dPeople;// must be Integer; int would reset to 0 on update
     @JsonProperty("dStar")
-    @Excel(name = "总分")
-    private Double dStar;//必须为integer类型，为int类型的话更新时会自动更新为0
+    @Excel(name = "Total Score")
+    private Double dStar;// must be Integer; int would reset to 0 on update
     @JsonProperty("dAvgStar")
-    @Excel(name = "平均分")
-    private Double dAvgStar;//必须为integer类型，为int类型的话更新时会自动更新为0
+    @Excel(name = "Average Score")
+    private Double dAvgStar;// must be Integer; int would reset to 0 on update
 
     /**
-     * 是否已排班，排班id
+     * whether scheduled, schedule id
      */
     @TableField(exist = false)
     private String arrangeId;

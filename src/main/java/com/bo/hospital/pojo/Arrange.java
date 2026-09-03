@@ -15,7 +15,7 @@ public class Arrange {
     @JsonProperty("dId")
     private int dId;
     /**
-     * 多表查询用
+     * for multi-table query
      */
     @TableField(exist = false)
     private Doctor doctor;

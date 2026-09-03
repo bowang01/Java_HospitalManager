@@ -29,7 +29,7 @@ public class AdminController {
     private OrderService orderService;
 
     /**
-     * 登录数据验证
+     * Login validation
      */
     @PostMapping("/login")
     public ResponseData login(@RequestParam("aId") int aId, @RequestParam("aPassword") String aPassword) {
@@ -40,92 +40,92 @@ public class AdminController {
             map.put("aId", String.valueOf(admin.getAId()));
             String token = JwtUtil.getToken(map);
             map.put("token", token);
-            return ResponseData.success("登录成功", map);
+            return ResponseData.success("Login successful", map);
         } else {
-            return ResponseData.fail("登录失败，密码或账号错误");
+            return ResponseData.fail("Login failed: incorrect account or password");
         }
     }
 
     /**
-     * 分页模糊查询所有医护人员信息
+     * Paginated fuzzy search of all medical staff
      */
     @RequestMapping("findAllDoctors")
     public ResponseData findAllDoctors(@RequestParam(value = "pageNumber") int pageNumber, @RequestParam(value = "size") int size, @RequestParam(value = "query") String query){
-        return ResponseData.success("返回医护人员信息成功",  this.doctorService.findAllDoctors(pageNumber, size, query));
+        return ResponseData.success("Doctors loaded",  this.doctorService.findAllDoctors(pageNumber, size, query));
     }
     /**
-     * 根据id查找医生
+     * Find doctor by id
      */
     @RequestMapping("findDoctor")
     public ResponseData findDoctor(@RequestParam(value = "dId") int dId) {
-        return ResponseData.success("查询医生成功", this.doctorService.findDoctor(dId));
+        return ResponseData.success("Doctor loaded", this.doctorService.findDoctor(dId));
     }
     /**
-     * 增加医生信息
+     * Add doctor
      */
     @RequestMapping("addDoctor")
     public ResponseData addDoctor(Doctor doctor) {
         Boolean bo = this.doctorService.addDoctor(doctor);
         if (bo) {
-            return ResponseData.success("增加医生信息成功");
+            return ResponseData.success("Doctor added");
         }
-        return ResponseData.fail("增加医生信息失败！账号或已被占用");
+        return ResponseData.fail("Failed to add doctor: account taken");
     }
     /**
-     * 删除医生信息
+     * Delete doctor
      */
     @RequestMapping("deleteDoctor")
     public ResponseData deleteDoctor(@RequestParam(value = "dId") int dId) {
         Boolean bo = this.doctorService.deleteDoctor(dId);
         if (bo){
-            return ResponseData.success("删除医生信息成功");
+            return ResponseData.success("Doctor deleted");
         }
-        return ResponseData.fail("删除医生信息失败");
+        return ResponseData.fail("Failed to delete doctor");
     }
     /**
-     * 修改医生信息
-     * bug: dState会自动更新为0
+     * Update doctor
+     * bug: dState will be auto-updated to 0
      */
     @RequestMapping("modifyDoctor")
     public ResponseData modifyDoctor(Doctor doctor) {
         this.doctorService.modifyDoctor(doctor);
-        return ResponseData.success("修改医生信息成功");
+        return ResponseData.success("Doctor updated");
     }
     /**
-     * 分页模糊查询所有患者信息
+     * Paginated fuzzy search of all patients
      */
     @RequestMapping("findAllPatients")
     public ResponseData findAllPatients(@RequestParam(value = "pageNumber") int pageNumber, @RequestParam(value = "size") int size, @RequestParam(value = "query") String query){
-        return ResponseData.success("返回患者信息成功",  this.patientService.findAllPatients(pageNumber, size, query));
+        return ResponseData.success("Patient info loaded",  this.patientService.findAllPatients(pageNumber, size, query));
     }
     /**
-     * 删除患者信息
+     * Delete patient
      */
     @RequestMapping("deletePatient")
     public ResponseData deletePatient(@RequestParam(value = "pId") int pId) {
         Boolean bo = this.patientService.deletePatient(pId);
         if (bo){
-            return ResponseData.success("删除患者信息成功");
+            return ResponseData.success("Patient deleted");
         }
-        return ResponseData.fail("删除患者信息失败");
+        return ResponseData.fail("Failed to delete patient");
     }
     /**
-     * 分页模糊查询所有挂号信息
+     * Paginated fuzzy search of all appointments
      */
     @RequestMapping("findAllOrders")
     public ResponseData findAllOrders(@RequestParam(value = "pageNumber") int pageNumber, @RequestParam(value = "size") int size, @RequestParam(value = "query") String query){
-        return ResponseData.success("返回挂号信息成功",  this.orderService.findAllOrders(pageNumber, size, query));
+        return ResponseData.success("Appointments loaded",  this.orderService.findAllOrders(pageNumber, size, query));
     }
     /**
-     * 删除挂号信息
+     * Delete appointment
      */
     @RequestMapping("deleteOrder")
     public ResponseData deleteOrder(@RequestParam(value = "oId") int oId) {
         Boolean bo = this.orderService.deleteOrder(oId);
         if (bo){
-            return ResponseData.success("删除挂号信息成功");
+            return ResponseData.success("Appointment deleted");
         }
-        return ResponseData.fail("删除挂号信息失败");
+        return ResponseData.fail("Failed to delete appointment");
     }
 
 }

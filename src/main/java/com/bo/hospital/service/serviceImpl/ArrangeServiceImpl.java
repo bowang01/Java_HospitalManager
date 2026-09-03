@@ -16,17 +16,17 @@ public class ArrangeServiceImpl implements ArrangeService {
     @Autowired
     private ArrangeMapper arrangeMapper;
     @Autowired
-    private JedisPool jedisPool;//redis连接池
+    private JedisPool jedisPool;// Redis connection pool
 
     /**
-     * 根据日期查询排班信息
+     * Find schedules by date
      */
     @Override
     public List<Arrange> findByTime(String arTime, String dSection) {
         return this.arrangeMapper.findByTime(arTime, dSection);
     }
     /**
-     * 增加排班信息
+     * Add schedule
      */
     public Boolean addArrange(Arrange arrange){
         Arrange arrange1 = this.arrangeMapper.selectById(arrange.getArId());
@@ -39,12 +39,12 @@ public class ArrangeServiceImpl implements ArrangeService {
         map.put("fTOs","40");
         map.put("sTOs","40");
         if (arrange1 == null) {
-            //redis操作开始
+            // Redis operations start
 //            jedis.hset(arrange.getArId(), map);
-            // 或者使用hmset设置整个哈希表的值
+            // or use hmset to set the entire hash
             jedis.hmset(arrange.getArId(), map);
             jedis.expire(arrange.getArId(), 604800);
-            //redis操作结束
+            // Redis operations end
             this.arrangeMapper.insert(arrange);
             return true;
         }
@@ -52,7 +52,7 @@ public class ArrangeServiceImpl implements ArrangeService {
     }
 
     /**
-     * 删除排班信息
+     * Delete schedule
      */
     public Boolean deleteArrange(String arId){
         Arrange arrange = this.arrangeMapper.selectById(arId);

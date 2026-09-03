@@ -35,11 +35,11 @@ public class Orders {
     private Integer countGender;
     @JsonProperty("oAdvice")
     private String oAdvice;
-    //多表查询用
-    @TableField(exist = false)//声明不是数据库里面的字段
+    // for multi-table query
+    @TableField(exist = false)// not a DB column
     private Doctor doctor;
-    //多表查询用
-    @TableField(exist = false)//声明不是数据库里面的字段
+    // for multi-table query
+    @TableField(exist = false)// not a DB column
     private Patient patient;
     @TableField(exist = false)
     private Integer countSection;

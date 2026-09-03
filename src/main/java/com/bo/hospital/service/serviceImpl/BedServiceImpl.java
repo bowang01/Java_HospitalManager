@@ -21,7 +21,7 @@ public class BedServiceImpl implements BedService {
     private BedMapper bedMapper;
 
     /**
-     * 查找所有空床位
+     * Find all empty beds
      */
     @Override
     public List<Bed> findNullBed(){
@@ -31,11 +31,11 @@ public class BedServiceImpl implements BedService {
     }
 
     /**
-     * 增加床位信息
+     * Add bed info
      */
     @Override
     /**
-     * 更新床位信息
+     * Update bed info
      */
     public Boolean updateBed(Bed bed){
         Bed bed1 = this.bedMapper.selectById(bed.getBId());
@@ -49,7 +49,7 @@ public class BedServiceImpl implements BedService {
         return true;
     }
     /**
-     * 根据pId查询挂号
+     * Find appointments by pId
      */
     public List<Bed> findBedByPid(int pId){
         QueryWrapper<Bed> wrapper = new QueryWrapper<>();
@@ -57,7 +57,7 @@ public class BedServiceImpl implements BedService {
         return this.bedMapper.selectList(wrapper);
     }
     /**
-     * 分页模糊查询所有检查信息
+     * Paginated fuzzy search of all exam items
      */
     @Override
     public HashMap<String, Object> findAllBeds(int pageNumber, int size, String query) {
@@ -66,25 +66,25 @@ public class BedServiceImpl implements BedService {
         wrapper.like("p_id", query);
         IPage<Bed> iPage = this.bedMapper.selectPage(page, wrapper);
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("total", iPage.getTotal());       //总条数
-        hashMap.put("size", iPage.getPages());       //总页数
-        hashMap.put("pageNumber", iPage.getCurrent());//当前页
-        hashMap.put("beds", iPage.getRecords()); //查询到的记录
+        hashMap.put("total", iPage.getTotal());       // total count
+        hashMap.put("size", iPage.getPages());       // total pages
+        hashMap.put("pageNumber", iPage.getCurrent());// current page
+        hashMap.put("beds", iPage.getRecords()); // records
         return hashMap;
     }
     /**
-     * 根据id查找检查
+     * Find exam item by id
      */
     @Override
     public Bed findBed(int bId){
         return this.bedMapper.selectById(bId);
     }
     /**
-     * 增加床位信息
+     * Add bed info
      */
     @Override
     public Boolean addBed(Bed bed){
-        //如果账号已存在则返回false
+        // return false if account already exists
         List<Bed> beds = this.bedMapper.selectList(null);
         for (Bed bed1 : beds) {
             if (bed1.getBId() == bed.getBId()) {
@@ -96,7 +96,7 @@ public class BedServiceImpl implements BedService {
         return true;
     }
     /**
-     * 删除床位信息
+     * Delete bed
      */
     @Override
     public Boolean deleteBed(int bId) {
@@ -104,7 +104,7 @@ public class BedServiceImpl implements BedService {
         return true;
     }
     /**
-     * 清空床位信息
+     * Clear bed info
      */
     public Boolean emptyBed(int bId){
         UpdateWrapper<Bed> wrapper = new UpdateWrapper<>();
@@ -114,7 +114,7 @@ public class BedServiceImpl implements BedService {
 
     }
     /**
-     * 统计今天挂号人数
+     * Count today's appointments
      */
     @Override
     public int bedPeople(String bStart){

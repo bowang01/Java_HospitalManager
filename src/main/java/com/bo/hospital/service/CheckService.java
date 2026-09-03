@@ -6,23 +6,23 @@ import java.util.HashMap;
 
 public interface CheckService {
     /**
-     * 分页模糊查询所有检查信息
+     * Paginated fuzzy search of all exam items
      */
     HashMap<String, Object> findAllChecks(int pageNumber, int size, String query);
     /**
-     * 根据id查找药物
+     * Find drug by id
      */
     Checks findCheck(int chId);
     /**
-     * 增加检查信息
+     * Add exam item
      */
     Boolean addCheck(Checks checks);
     /**
-     * 删除检查信息
+     * Delete exam item
      */
     Boolean deleteCheck(int chId);
     /**
-     * 修改检查信息
+     * Update exam item
      */
     Boolean modifyCheck(Checks checks);
 }

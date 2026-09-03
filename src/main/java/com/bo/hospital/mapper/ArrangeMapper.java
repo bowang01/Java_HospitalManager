@@ -9,7 +9,7 @@ import java.util.List;
 public interface ArrangeMapper extends BaseMapper<Arrange> {
 
     /**
-     * 根据日期查询排班信息
+     * Find schedules by date
      */
     List<Arrange> findByTime(@Param("ar_time") String arTime, @Param("d_section") String dSection);
 

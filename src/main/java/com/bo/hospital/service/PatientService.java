@@ -7,27 +7,27 @@ import java.util.List;
 
 public interface PatientService {
     /**
-     * 登录数据校验
+     * Login validation
      * */
     Patient login(int pId, String pPassword);
     /**
-     * 分页模糊查询所有患者信息
+     * Paginated fuzzy search of all patients
      */
     HashMap<String, Object> findAllPatients(int pageNumber, int size, String query);
     /**
-     * 删除患者信息
+     * Delete patient
      */
     Boolean deletePatient(int pId);
     /**
-     * 根据患者id查询患者信息
+     * Find patient info by patient id
      */
     Patient findPatientById(int pId);
     /**
-     * 增加患者信息
+     * Add patient
      */
     Boolean addPatient(Patient patient);
     /**
-     * 统计患者男女人数
+     * Count patient gender stats
      */
     List<Integer> patientAge();
 }

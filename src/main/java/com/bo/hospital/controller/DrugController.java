@@ -14,56 +14,56 @@ public class DrugController {
     @Autowired
     private DrugService drugService;
     /**
-     * 分页模糊查询所有药物信息
+     * Paginated fuzzy search of all drugs
      */
     @RequestMapping("findAllDrugs")
     public ResponseData findAllDrugs(int pageNumber, int size, String query){
-        return ResponseData.success("返回所有药物信息成功", this.drugService.findAllDrugs(pageNumber, size, query));
+        return ResponseData.success("Drugs loaded", this.drugService.findAllDrugs(pageNumber, size, query));
     }
     /**
-     * 根据id查找药物
+     * Find drug by id
      */
     @RequestMapping("findDrug")
     public ResponseData findDrug(int drId){
-        return ResponseData.success("根据id查找药物成功", this.drugService.findDrug(drId));
+        return ResponseData.success("Drug loaded", this.drugService.findDrug(drId));
     }
     /**
-     * 根据id删除药物数量
+     * Reduce drug stock by id
      */
     @RequestMapping("reduceDrugNumber")
     public ResponseData reduceDrugNumber(int drId,int usedNumber){
         if (this.drugService.reduceDrugNumber(drId, usedNumber))
-            return ResponseData.success("根据id删除药物数量成功");
-        return ResponseData.fail("根据id删除药物数量失败");
+            return ResponseData.success("Drug stock updated");
+        return ResponseData.fail("Failed to update drug stock");
     }
     /**
-     * 增加药物信息
+     * Add drug
      */
     @RequestMapping("addDrug")
     public ResponseData addDrug(Drug drug) {
         Boolean bo = this.drugService.addDrug(drug);
         if (bo) {
-            return ResponseData.success("增加药物信息成功");
+            return ResponseData.success("Drug added");
         }
-        return ResponseData.fail("增加药物信息失败！账号或已被占用");
+        return ResponseData.fail("Failed to add drug: ID taken");
     }
     /**
-     * 删除药物信息
+     * Delete drug
      */
     @RequestMapping("deleteDrug")
     public ResponseData deleteDrug(@RequestParam(value = "drId") int drId) {
         Boolean bo = this.drugService.deleteDrug(drId);
         if (bo){
-            return ResponseData.success("删除药物信息成功");
+            return ResponseData.success("Drug deleted");
         }
-        return ResponseData.fail("删除药物信息失败");
+        return ResponseData.fail("Failed to delete drug");
     }
     /**
-     * 修改药物信息
+     * Update drug
      */
     @RequestMapping("modifyDrug")
     public ResponseData modifyDrug(Drug drug) {
         this.drugService.modifyDrug(drug);
-        return ResponseData.success("修改药物信息成功");
+        return ResponseData.success("Drug updated");
     }
 }

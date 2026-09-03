@@ -16,82 +16,82 @@ public class BedController {
     private BedService bedService;
 
     /**
-     * 查找所有空床位
+     * Find all empty beds
      */
     @RequestMapping("findNullBed")
     public ResponseData findNullBed(){
-        return ResponseData.success("查找所有空床位成功", this.bedService.findNullBed());
+        return ResponseData.success("Empty beds loaded", this.bedService.findNullBed());
     }
 
     /**
-     * 增加床位信息
+     * Add bed info
      */
     @RequestMapping("updateBed")
     public ResponseData updateBed(Bed bed) {
         if (this.bedService.updateBed(bed)){
-            return ResponseData.success("增加床位成功！");
+            return ResponseData.success("Bed added");
         }
-        return ResponseData.fail("增加床位失败！");
+        return ResponseData.fail("Failed to add bed");
     }
     /**
-     * 根据pId查询住院
+     * Find inpatient record by pId
      */
     @RequestMapping("findBedByPid")
     public ResponseData findBedByPid(@RequestParam(value = "pId") int pId){
-        return ResponseData.success("根据pId查询住院成功", this.bedService.findBedByPid(pId)) ;
+        return ResponseData.success("Inpatient record loaded", this.bedService.findBedByPid(pId)) ;
     }
     /**
-     * 分页模糊查询所有床位信息
+     * Paginated fuzzy search of all beds
      */
     @RequestMapping("findAllBeds")
     public ResponseData findAllBeds(int pageNumber, int size, String query){
-        return ResponseData.success("返回所有床位信息成功", this.bedService.findAllBeds(pageNumber, size, query));
+        return ResponseData.success("Beds loaded", this.bedService.findAllBeds(pageNumber, size, query));
     }
     /**
-     * 根据id查找床位
+     * Find bed by id
      */
     @RequestMapping("findBed")
     public ResponseData findBed(int bId){
-        return ResponseData.success("根据id查找床位成功", this.bedService.findBed(bId));
+        return ResponseData.success("Bed loaded", this.bedService.findBed(bId));
     }
     /**
-      * 增加床位信息
+      * Add bed info
      */
     @RequestMapping("addBed")
     public ResponseData addBed(Bed bed) {
         Boolean bo = this.bedService.addBed(bed);
         if (bo) {
-            return ResponseData.success("增加床位信息成功");
+            return ResponseData.success("Bed added");
         }
-        return ResponseData.fail("增加床位信息失败！床号或已被占用");
+        return ResponseData.fail("Failed to add bed: bed number taken");
     }
     /**
-     * 删除药物信息
+     * Delete drug info
      */
     @RequestMapping("deleteBed")
     public ResponseData deleteBed(@RequestParam(value = "bId") int bId) {
         Boolean bo = this.bedService.deleteBed(bId);
         if (bo){
-            return ResponseData.success("删除床位信息成功");
+            return ResponseData.success("Bed deleted");
         }
-        return ResponseData.fail("删除床位信息失败");
+        return ResponseData.fail("Failed to delete bed");
     }
     /**
-     * 清空床位信息
+     * Clear bed info
      */
     @RequestMapping("emptyBed")
     public ResponseData emptyBed(int bId){
         if(this.bedService.emptyBed(bId)){
-            return ResponseData.success("清空床位信息成功");
+            return ResponseData.success("Bed cleared");
         }
-        return ResponseData.fail("清空床位信息失败");
+        return ResponseData.fail("Failed to clear bed");
     }
     /**
-     * 统计今天挂号人数
+     * Count today's appointments
      */
     @RequestMapping("bedPeople")
     public ResponseData bedPeople(){
         String bStart = TodayUtil.getTodayYmd();
-        return ResponseData.success("统计今天住院人数成功", this.bedService.bedPeople(bStart));
+        return ResponseData.success("Today's inpatient count loaded", this.bedService.bedPeople(bStart));
     }
 }

@@ -11,19 +11,19 @@ import java.util.Map;
 public class JwtUtil {
     private static String SIGNAL = "1HU&**UUY**(GNH";
     /**
-     * 生成token
+     * generate token
      */
     public static String getToken(Map<String, String> map){
         Calendar instance = Calendar.getInstance();
-        instance.add(Calendar.DATE, 30);             //设置过期时间为30天
+        instance.add(Calendar.DATE, 30);             // expire in 30 days
 
-        //创建jwt builder
+        // create jwt builder
         final JWTCreator.Builder builder = JWT.create();
         //payload
         map.forEach((k,v)->{
             builder.withClaim(k,v);
         });
-        String token = builder.withExpiresAt(instance.getTime())//指定令牌过期时间
+        String token = builder.withExpiresAt(instance.getTime())// set token expiration time
                 .sign(Algorithm.HMAC256(SIGNAL));//sign
         return token;
     }

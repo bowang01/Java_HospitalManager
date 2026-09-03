@@ -12,33 +12,33 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MyBatisPlusConfig {
     /**
-     * 注册插件
+     * Register plugins
      */
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 
-        // 添加分页插件
+        // Add pagination plugin
         PaginationInnerInterceptor pageInterceptor = new PaginationInnerInterceptor();
-        // 设置数据库类型
+        // Set database type
         pageInterceptor.setDbType(DbType.MYSQL);
 
         interceptor.addInnerInterceptor(pageInterceptor);
 
-        // 乐观锁插件
+        // Optimistic locker plugin
         OptimisticLockerInnerInterceptor optimisticLockerInnerInterceptor = new OptimisticLockerInnerInterceptor();
         interceptor.addInnerInterceptor(optimisticLockerInnerInterceptor);
         return interceptor;
     }
     /**
-     * 配置分页插件
+     * Configure pagination plugin
      */
 //    @Bean
 //    public PaginationInterceptor paginationInterceptor(){
 //        return new PaginationInterceptor();
 //    }
     /**
-     * 配置乐观锁插件
+     * Configure optimistic locker plugin
      */
 //    @Bean
 //    public OptimisticLockerInterceptor optimisticLockerInterceptor(){

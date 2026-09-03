@@ -10,7 +10,7 @@ public interface DoctorMapper extends BaseMapper<Doctor> {
 
     List<Doctor> findDoctorBySection(String dSection);
     /**
-     * 用户评价
+     * User rating
      */
     Boolean updateStar(@Param("dId")int dId, @Param("dStar")Double dStar);
 }

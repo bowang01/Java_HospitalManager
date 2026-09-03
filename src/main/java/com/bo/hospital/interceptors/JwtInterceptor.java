@@ -16,23 +16,23 @@ public class JwtInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Map<String,Object> map = new HashMap<>();
-        //获取请求头中的令牌
+        // Get the token from the request header
         String token = request.getHeader("token");
         try {
-            JwtUtil.verify(token);//验证令牌
+            JwtUtil.verify(token);// verify token
             return true;
         }catch (SignatureVerificationException e){
             e.printStackTrace();
-            map.put("msg", "无效签名！");
+            map.put("msg", "Invalid signature");
         }catch (TokenExpiredException e){
             e.printStackTrace();
-            map.put("msg", "token过期！");
+            map.put("msg", "Token expired");
         }catch (AlgorithmMismatchException e){
             e.printStackTrace();
-            map.put("msg", "token算法不一致！");
+            map.put("msg", "Token algorithm mismatch");
         }catch (Exception e){
             e.printStackTrace();
-            map.put("msg", "token无效！");
+            map.put("msg", "Invalid token");
         }
         map.put("state", false);
         String json = new ObjectMapper().writeValueAsString(map);

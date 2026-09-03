@@ -5,15 +5,15 @@ import java.io.Serializable;
 
 public class ResponseData implements Serializable {
     /**
-     * 表示当前相应的状态是成功或者失败
+     * success or failure flag
      */
     private int status;
     /**
-     * 表示当响应之后给前端的提示信息
+     * message for frontend
      */
     private String msg;
     /**
-     * 表示当响应成功之后返回给前端的数据
+     * payload for frontend
      */
     private Object data;
 

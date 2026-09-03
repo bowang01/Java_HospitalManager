@@ -21,7 +21,7 @@ public class ProcessContextAware implements ServletContextAware {
             String os = System.getProperty("os.name").toLowerCase();
 
             if (os.contains("win")) {
-                // Windows系统关闭占用指定端口的逻辑
+                // On Windows, kill the process occupying the specified port
                 ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/c", "netstat -ano | findstr " + port);
                 Process process = processBuilder.start();
                 InputStream inputStream = process.getInputStream();
@@ -34,7 +34,7 @@ public class ProcessContextAware implements ServletContextAware {
                     killProcess.start();
                 }
             } else if (os.contains("nix") || os.contains("nux") || os.contains("mac")) {
-                // Linux或Mac OS系统关闭占用指定端口的逻辑
+                // On Linux or Mac OS, kill the process occupying the specified port
                 ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", "lsof -ti:" + port + " | xargs kill -9");
                 processBuilder.start();
             }

@@ -5,7 +5,7 @@ import com.bo.hospital.pojo.Bed;
 
 public interface BedMapper extends BaseMapper<Bed> {
     /**
-     * 统计今天住院人数
+     * Count today's inpatients
      */
     int bedPeople(String bStart);
 }

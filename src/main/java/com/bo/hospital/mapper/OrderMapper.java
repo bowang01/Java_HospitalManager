@@ -8,35 +8,35 @@ import java.util.List;
 
 public interface OrderMapper extends BaseMapper<Orders> {
     /**
-     * 统计今天挂号人数
+     * Count today's appointments
      */
     int orderPeople(String oStart);
     /**
-     * 统计今天某个医生挂号人数
+     * Count today's appointments for a doctor
      */
     int orderPeopleByDid(@Param("o_start") String oStart, @Param("d_id") int dId);
     /**
-     * 统计挂号男女人数
+     * Count appointment gender stats
      */
     List<String> orderGender();
     /**
-     * 根据挂号单号查询挂号
+     * Find appointment by order number
      */
     Orders findOrderByOid(int oId);
     /**
-     * 增加诊断及医生意见
+     * Add diagnosis and doctor notes
      */
     Integer updateOrderByAdd(Orders order);
     /**
-     * 统计过去20天挂号科室人数
+     * Count department appointments for the last 20 days
      */
     List<String> orderSection(@Param("startTime") String startTime, @Param("endTime") String endTime);
     /**
-     * 查看当天挂号列表
+     * Find today's appointment list
      */
     List<Orders> findOrderByNull(@Param("dId") int dId, @Param("oStart") String oStart);
     /**
-     * 根据pId查询挂号
+     * Find appointments by pId
      */
     List<Orders> findOrderByPid(int pId);
 

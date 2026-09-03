@@ -6,27 +6,27 @@ import java.util.HashMap;
 
 public interface DrugService {
     /**
-     * 分页模糊查询所有药物信息
+     * Paginated fuzzy search of all drugs
      */
     HashMap<String, Object> findAllDrugs(int pageNumber, int size, String query);
     /**
-     * 根据id查找药物
+     * Find drug by id
      */
     Drug findDrug(int drId);
     /**
-     * 根据id删除药物数量
+     * Reduce drug stock by id
      */
     Boolean reduceDrugNumber(int drId,int usedNumber);
     /**
-     * 增加药物信息
+     * Add drug
      */
     Boolean addDrug(Drug drug);
     /**
-     * 删除药物信息
+     * Delete drug
      */
     Boolean deleteDrug(int drId);
     /**
-     * 修改药物信息
+     * Update drug
      */
     Boolean modifyDrug(Drug drug);
 }

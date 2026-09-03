@@ -26,7 +26,7 @@ public class DoctorController {
     @Autowired
     private PatientService patientService;
     /**
-     * 登录数据验证
+     * Login validation
      */
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ResponseData login(@RequestParam(value = "dId") int dId, @RequestParam(value = "dPassword") String dPassword) {
@@ -38,63 +38,63 @@ public class DoctorController {
             String token = JwtUtil.getToken(map);
             map.put("token", token);
             //response.setHeader("token", token);
-            return ResponseData.success("登录成功", map);
+            return ResponseData.success("Login successful", map);
         } else {
-            return ResponseData.fail("登录失败，密码或账号错误");
+            return ResponseData.fail("Login failed: incorrect account or password");
         }
     }
     /**
-     * 查看当天挂号列表
+     * Find today's appointment list
      */
     @RequestMapping("findOrderByNull")
     public ResponseData findOrderByNull(@Param(value = "dId") int dId, @RequestParam(value = "oStart") String oStart){
-        System.out.println("账号时间为"+dId+oStart);
-        return ResponseData.success("返回当天挂号信息成功", this.orderService.findOrderByNull(dId,oStart));
+        System.out.println("Account and time: "+dId+oStart);
+        return ResponseData.success("Today's appointments loaded", this.orderService.findOrderByNull(dId,oStart));
 
     }
     /**
-     * 根据患者id查询患者信息
+     * Find patient info by patient id
      */
     @RequestMapping("findPatientById")
     public ResponseData findPatientById(int pId){
-        return ResponseData.success("返回患者信息成功！", this.patientService.findPatientById(pId));
+        return ResponseData.success("Patient info loaded", this.patientService.findPatientById(pId));
     }
     /**
-     * 分页根据科室查询所有医生信息
+     * Paginated find all doctors by department
      */
     @RequestMapping("findDoctorBySectionPage")
     public ResponseData findDoctorBySectionPage(int pageNumber, int size, String query, String arrangeDate, String dSection){
-        return ResponseData.success("分页根据科室查询所有医生信息成功", this.doctorService.findDoctorBySectionPage(pageNumber, size, query, arrangeDate, dSection));
+        return ResponseData.success("Doctors by department loaded", this.doctorService.findDoctorBySectionPage(pageNumber, size, query, arrangeDate, dSection));
     }
     /**
-     * 用户评价
+     * User rating
      */
     @RequestMapping("updateStar")
     public ResponseData updateStar(int dId, Double dStar){
         if(this.doctorService.updateStar(dId, dStar)){
-            return ResponseData.success("评价成功");
+            return ResponseData.success("Rating submitted");
         }
-        return ResponseData.fail("评价失败");
+        return ResponseData.fail("Rating failed");
     }
     /**
-     * 上传Excel导入数据
+     * Upload Excel and import data
      */
     @RequestMapping(value = "uploadExcel", method = RequestMethod.POST)
     public ResponseData uploadExcel(@RequestParam("file") MultipartFile multipartFile) throws Exception {
         if (this.doctorService.uploadExcel(multipartFile)){
-            return ResponseData.success("上传Excel导入数据成功");
+            return ResponseData.success("Excel import succeeded");
         }
-        return ResponseData.fail("上传Excel导入数据失败");
+        return ResponseData.fail("Excel import failed");
 
     }
     /**
-     * Excel导出数据
+     * Export Excel data
      */
     @RequestMapping("downloadExcel")
     public ResponseData downloadExcel(HttpServletResponse response) throws IOException {
         if (this.doctorService.downloadExcel(response)){
-            return ResponseData.success("Excel导出数据成功");
+            return ResponseData.success("Excel export succeeded");
         }
-        return ResponseData.fail("Excel导出数据失败");
+        return ResponseData.fail("Excel export failed");
     }
 }

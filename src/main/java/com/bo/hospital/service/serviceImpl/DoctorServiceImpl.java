@@ -34,7 +34,7 @@ public class DoctorServiceImpl implements DoctorService {
     private ArrangeMapper arrangeMapper;
 
     /**
-     * 登录数据校验
+     * Login validation
      * */
     @Override
     public Doctor login(int dId, String dPassword){
@@ -50,7 +50,7 @@ public class DoctorServiceImpl implements DoctorService {
         return null;
     }
     /**
-     * 分页模糊查询所有医护人员信息
+     * Paginated fuzzy search of all medical staff
      */
     @Override
     public HashMap<String, Object> findAllDoctors(int pageNumber, int size, String query) {
@@ -59,15 +59,15 @@ public class DoctorServiceImpl implements DoctorService {
         wrapper.like("d_name", query).eq("d_state", 1);
         IPage<Doctor> iPage = this.doctorMapper.selectPage(page, wrapper);
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("total", iPage.getTotal());       //总条数
-        hashMap.put("pages", iPage.getPages());       //总页数
-        hashMap.put("pageNumber", iPage.getCurrent());//当前页
-        hashMap.put("doctors", iPage.getRecords()); //查询到的记录
+        hashMap.put("total", iPage.getTotal());       // total count
+        hashMap.put("pages", iPage.getPages());       // total pages
+        hashMap.put("pageNumber", iPage.getCurrent());// current page
+        hashMap.put("doctors", iPage.getRecords()); // records
         return hashMap;
     }
 
     /**
-     * 根据id查找医生
+     * Find doctor by id
      */
     @Override
     public Doctor findDoctor(int dId) {
@@ -75,18 +75,18 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     /**
-     * 增加医生信息
+     * Add doctor
      */
     @Override
     public Boolean addDoctor(Doctor doctor) {
-        //如果账号已存在则返回false
+        // return false if account already exists
         List<Doctor> doctors = this.doctorMapper.selectList(null);
         for (Doctor doctor1 : doctors) {
             if (doctor.getdId() == doctor1.getdId()) {
                 return false;
             }
         }
-        //密码加密
+        // encrypt password
         String password = Md5Util.getMD5(doctor.getdPassword());
         doctor.setdPassword(password);
         doctor.setdState(1);
@@ -97,7 +97,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     /**
-     * 删除医生信息
+     * Delete doctor
      */
     @Override
     public Boolean deleteDoctor(int dId) {
@@ -109,7 +109,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     /**
-     * 修改医生信息
+     * Update doctor
      */
     @Override
     public Boolean modifyDoctor(Doctor doctor) {
@@ -117,11 +117,11 @@ public class DoctorServiceImpl implements DoctorService {
 //        queryWrapper.eq("d_id", doctor.getDId());
 //        this.doctorMapper.update(doctor, queryWrapper);
         int i = this.doctorMapper.updateById(doctor);
-        System.out.println("影响行数："+i);
+        System.out.println("affected rows: "+i);
         return true;
     }
     /**
-     * 根据科室查询所有医生信息
+     * Find all doctors by department
      */
     @Override
     public HashMap<String, Object> findDoctorBySection(String dSection){
@@ -135,7 +135,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     }
     /**
-     * 分页根据科室查询所有医生信息
+     * Paginated find all doctors by department
      */
     @Override
     public HashMap<String, Object> findDoctorBySectionPage(int pageNumber, int size, String query, String arrangeDate, String dSection) {
@@ -145,12 +145,12 @@ public class DoctorServiceImpl implements DoctorService {
         IPage<Doctor> iPage = this.doctorMapper.selectPage(page, wrapper);
         List<Doctor> records = iPage.getRecords();
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("total", iPage.getTotal());       //总条数
-        hashMap.put("pages", iPage.getPages());       //总页数
-        hashMap.put("pageNumber", iPage.getCurrent());//当前页
-        hashMap.put("doctors", records); //查询到的记录
+        hashMap.put("total", iPage.getTotal());       // total count
+        hashMap.put("pages", iPage.getPages());       // total pages
+        hashMap.put("pageNumber", iPage.getCurrent());// current page
+        hashMap.put("doctors", records); // records
 
-        // 查询医生是否已排班
+        // Check whether the doctor is already scheduled
         for (Doctor doctor : records) {
             Arrange arrange = arrangeMapper.selectOne(
                     new QueryWrapper<Arrange>().eq("ar_time", arrangeDate).eq("d_id", doctor.getdId())
@@ -164,7 +164,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     /**
-     * 用户评价
+     * User rating
      */
     @Override
     public Boolean updateStar(int dId, Double dStar){
@@ -174,7 +174,7 @@ public class DoctorServiceImpl implements DoctorService {
         return false;
     }
     /**
-     * 上传Excel导入数据
+     * Upload Excel and import data
      */
     @Override
     public Boolean uploadExcel(MultipartFile multipartFile) throws Exception {
@@ -188,21 +188,21 @@ public class DoctorServiceImpl implements DoctorService {
         return true;
     }
     /**
-     * Excel导出数据
+     * Export Excel data
      */
     @Override
     public Boolean downloadExcel(HttpServletResponse response) throws IOException {
         List<Doctor> doctors = this.findAll();
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams(), Doctor.class, doctors);
         ServletOutputStream stream = response.getOutputStream();
-        response.setHeader("content-disposition", "attachment;fileName="+ URLEncoder.encode("医院医生信息.xlsx", "UTF-8"));
+        response.setHeader("content-disposition", "attachment;fileName="+ URLEncoder.encode("HospitalDoctors.xlsx", "UTF-8"));
         workbook.write(stream);
         stream.close();
         workbook.close();
         return true;
     }
     /**
-     * 查询所有医生不分页
+     * Find all doctors without pagination
      */
     @Override
     public List<Doctor> findAll(){

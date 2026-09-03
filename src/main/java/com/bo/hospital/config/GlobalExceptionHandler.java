@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value =Exception.class)
     @ResponseBody
     public ResponseEntity<String> handleException(Exception e) {
-        // 自定义异常处理逻辑
+        // Custom exception handling logic
         String message = e.getMessage();
         e.printStackTrace();
         if (message.contains("(using password: YES)")) {
