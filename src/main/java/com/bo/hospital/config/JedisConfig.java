@@ -13,9 +13,9 @@ import redis.clients.jedis.JedisPoolConfig;
 @Configuration
 @PropertySource(value="classpath:redisConfig.properties")
 public class JedisConfig {
-    @Value(value = "${redis.host}")
+    @Value(value = "${REDIS_HOST:${redis.host}}")
     private String host;
-    @Value(value = "${redis.port}")
+    @Value(value = "${REDIS_PORT:${redis.port}}")
     private int port;
     @Value(value = "${redis.password}")
     private String password;

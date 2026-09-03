@@ -1,0 +1,2 @@
+FROM mysql:8.0
+COPY hospital_manager.sql /docker-entrypoint-initdb.d/01-hospital_manager.sql
