@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bo.hospital.mapper.CheckMapper;
 import com.bo.hospital.pojo.Checks;
 import com.bo.hospital.service.CheckService;
+import com.bo.hospital.utils.InputLengthValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class CheckServiceImpl implements CheckService {
      */
     @Override
     public HashMap<String, Object> findAllChecks(int pageNumber, int size, String query) {
+        InputLengthValidator.checkQuery(query);
         Page<Checks> page = new Page<>(pageNumber, size);
         QueryWrapper<Checks> wrapper = new QueryWrapper<>();
         wrapper.like("ch_name", query);
@@ -45,6 +47,7 @@ public class CheckServiceImpl implements CheckService {
      */
     @Override
     public Boolean addCheck(Checks checks){
+        InputLengthValidator.checkChecks(checks);
         // return false if account already exists
         List<Checks> checks1 = this.checkMapper.selectList(null);
         for (Checks checks2 : checks1) {
@@ -68,6 +71,7 @@ public class CheckServiceImpl implements CheckService {
      */
     @Override
     public Boolean modifyCheck(Checks checks) {
+        InputLengthValidator.checkChecks(checks);
         int i = this.checkMapper.updateById(checks);
         System.out.println("affected rows: "+i);
         return true;

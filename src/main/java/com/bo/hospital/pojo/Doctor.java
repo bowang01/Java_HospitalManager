@@ -26,7 +26,7 @@ public class Doctor implements Serializable {
     @Excel(name = "Gender")
     private String dGender;
     @JsonProperty("dCard")
-    @Excel(name = "ID Number")
+    @Excel(name = "MCNZ No.")
     private String dCard;
     @JsonProperty("dEmail")
     @Excel(name = "Email")

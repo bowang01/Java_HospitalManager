@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bo.hospital.mapper.BedMapper;
 import com.bo.hospital.pojo.Bed;
 import com.bo.hospital.service.BedService;
+import com.bo.hospital.utils.InputLengthValidator;
 import com.bo.hospital.utils.TodayUtil;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,7 @@ public class BedServiceImpl implements BedService {
      * Update bed info
      */
     public Boolean updateBed(Bed bed){
+        InputLengthValidator.checkBed(bed);
         Bed bed1 = this.bedMapper.selectById(bed.getBId());
         if (bed1.getBState() == 1)
             return false;
@@ -61,6 +63,7 @@ public class BedServiceImpl implements BedService {
      */
     @Override
     public HashMap<String, Object> findAllBeds(int pageNumber, int size, String query) {
+        InputLengthValidator.checkQuery(query);
         Page<Bed> page = new Page<>(pageNumber, size);
         QueryWrapper<Bed> wrapper = new QueryWrapper<>();
         wrapper.like("p_id", query);
@@ -84,6 +87,7 @@ public class BedServiceImpl implements BedService {
      */
     @Override
     public Boolean addBed(Bed bed){
+        InputLengthValidator.checkBed(bed);
         // return false if account already exists
         List<Bed> beds = this.bedMapper.selectList(null);
         for (Bed bed1 : beds) {

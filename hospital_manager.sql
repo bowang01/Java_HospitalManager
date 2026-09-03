@@ -19,7 +19,9 @@ CREATE TABLE `admini`  (
 -- ----------------------------
 -- Records of admini
 -- ----------------------------
-INSERT INTO `admini` VALUES (22401717, '123456', 'admin', 'Male', '440111111111111111', '13544444444', '123@qq.com');
+-- Demo accounts (password 123456):
+-- Admin 22401717, Doctor 1000, Patient 2000
+INSERT INTO `admini` VALUES (22401717, '123456', 'Sarah Mitchell', 'Female', '49091850', '021 555 0101', 'sarah.mitchell@hospital.nz');
 
 -- ----------------------------
 -- Table structure for arrange
@@ -78,17 +80,17 @@ CREATE TABLE `checks`  (
 -- ----------------------------
 -- Records of checks
 -- ----------------------------
-INSERT INTO `checks` VALUES (1, 'B-Ultrasound', 201.00);
-INSERT INTO `checks` VALUES (2, 'CT', 435.00);
-INSERT INTO `checks` VALUES (3, 'MRI', 653.00);
-INSERT INTO `checks` VALUES (4, 'MRI', 534.00);
-INSERT INTO `checks` VALUES (5, 'ECG', 634.00);
-INSERT INTO `checks` VALUES (6, 'Color Doppler', 213.00);
-INSERT INTO `checks` VALUES (7, 'Blood Routine', 434.00);
-INSERT INTO `checks` VALUES (8, 'Liver Function', 543.00);
-INSERT INTO `checks` VALUES (9, 'Blood Glucose', 434.00);
-INSERT INTO `checks` VALUES (10, 'Thyroid', 434.00);
-INSERT INTO `checks` VALUES (11, 'Vision', 50.00);
+INSERT INTO `checks` VALUES (1, 'Ultrasound', 180.00);
+INSERT INTO `checks` VALUES (2, 'CT', 850.00);
+INSERT INTO `checks` VALUES (3, 'MRI', 1400.00);
+INSERT INTO `checks` VALUES (4, 'X-Ray', 95.00);
+INSERT INTO `checks` VALUES (5, 'ECG', 75.00);
+INSERT INTO `checks` VALUES (6, 'Echocardiogram', 320.00);
+INSERT INTO `checks` VALUES (7, 'CBC', 45.00);
+INSERT INTO `checks` VALUES (8, 'Liver Function', 55.00);
+INSERT INTO `checks` VALUES (9, 'Blood Glucose', 25.00);
+INSERT INTO `checks` VALUES (10, 'Thyroid Function', 60.00);
+INSERT INTO `checks` VALUES (11, 'Vision Test', 40.00);
 
 -- ----------------------------
 -- Table structure for doctor
@@ -117,7 +119,9 @@ CREATE TABLE `doctor`  (
 -- Records of doctor
 -- ----------------------------
 INSERT INTO `doctor` VALUES (-1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL);
-INSERT INTO `doctor` VALUES (1000, '3d7dd7b26500bd0595573b651d0080fd', 'Zhang San', 'Male', '13899999999', '444111199901011111', '456@qq.com', 'Chief Physician', 'Full-time neurologist', 'Neurology', 1, 10.00, 0, 0.00, NULL);
+INSERT INTO `doctor` VALUES (1000, '3d7dd7b26500bd0595573b651d0080fd', 'James Wilson', 'Male', '021 555 0188', '458219', 'james.wilson@hospital.nz', 'Consultant', 'Consultant neurologist at Auckland City Hospital', 'Neurology', 1, 85.00, 0, 0.00, NULL);
+INSERT INTO `doctor` VALUES (1001, '3d7dd7b26500bd0595573b651d0080fd', 'Emma Clarke', 'Female', '021 555 0189', '458220', 'emma.clarke@hospital.nz', 'Specialist', 'Paediatric specialist at Starship Children''s Hospital', 'Pediatrics', 1, 75.00, 0, 0.00, NULL);
+INSERT INTO `doctor` VALUES (1002, '3d7dd7b26500bd0595573b651d0080fd', 'Hemi Ngata', 'Male', '027 555 0190', '458221', 'hemi.ngata@hospital.nz', 'Registrar', 'Cardiology registrar at Wellington Hospital', 'Cardiology', 1, 55.00, 0, 0.00, NULL);
 
 -- ----------------------------
 -- Table structure for drug
@@ -136,23 +140,23 @@ CREATE TABLE `drug`  (
 -- ----------------------------
 -- Records of drug
 -- ----------------------------
-INSERT INTO `drug` VALUES (1, 'Penicillin', 23.00, 23, 'National Medical Administration', 'Bag');
-INSERT INTO `drug` VALUES (2, 'Oxacillin', 11.00, 35, 'National Medical Administration', 'Box');
-INSERT INTO `drug` VALUES (3, 'Ampicillin', 13.00, 52, 'National Medical Administration', 'Box');
-INSERT INTO `drug` VALUES (4, 'Piperacillin', 2.00, 7, 'National Medical Administration', 'Box');
-INSERT INTO `drug` VALUES (5, 'Amoxicillin', 13.00, 20, 'National Medical Administration', 'Box');
-INSERT INTO `drug` VALUES (6, 'Cefazolin', 3.00, 32, 'National Medical Administration', 'Box');
-INSERT INTO `drug` VALUES (7, 'Cefalexin', 4.00, 43, 'National Medical Administration', 'Box');
-INSERT INTO `drug` VALUES (8, 'Cefuroxime', 8.00, 54, 'National Medical Administration', 'Box');
-INSERT INTO `drug` VALUES (9, 'Amikacin', 5.00, 54, 'National Medical Administration', 'Bag');
-INSERT INTO `drug` VALUES (10, 'Gentamicin', 7.00, 64, 'National Medical Administration', 'Bag');
-INSERT INTO `drug` VALUES (11, 'Erythromycin', 6.00, 76, 'National Medical Administration', 'Bag');
-INSERT INTO `drug` VALUES (12, 'Azithromycin', 54.00, 52, 'National Medical Administration', 'Bag');
-INSERT INTO `drug` VALUES (13, 'Clindamycin', 65.00, 21, 'National Medical Administration', 'Bag');
-INSERT INTO `drug` VALUES (14, 'Co-trimoxazole', 76.00, 54, 'National Medical Administration', 'Bag');
-INSERT INTO `drug` VALUES (15, 'Norfloxacin', 65.00, 33, 'National Medical Administration', 'Bag');
-INSERT INTO `drug` VALUES (16, 'Levofloxacin', 76.00, 43, 'National Medical Administration', 'Bag');
-INSERT INTO `drug` VALUES (17, 'Gankang', 15.00, 10, 'Gankang Group', 'Box');
+INSERT INTO `drug` VALUES (1, 'Penicillin', 8.00, 23, 'Pharmac', 'Pack');
+INSERT INTO `drug` VALUES (2, 'Oxacillin', 11.00, 35, 'Pharmac', 'Box');
+INSERT INTO `drug` VALUES (3, 'Ampicillin', 12.00, 52, 'Pharmac', 'Box');
+INSERT INTO `drug` VALUES (4, 'Piperacillin', 18.00, 7, 'Pharmac', 'Box');
+INSERT INTO `drug` VALUES (5, 'Amoxicillin', 13.00, 20, 'Pharmac', 'Box');
+INSERT INTO `drug` VALUES (6, 'Cefazolin', 9.00, 32, 'Pharmac', 'Box');
+INSERT INTO `drug` VALUES (7, 'Cefalexin', 7.00, 43, 'Pharmac', 'Box');
+INSERT INTO `drug` VALUES (8, 'Cefuroxime', 14.00, 54, 'Pharmac', 'Box');
+INSERT INTO `drug` VALUES (9, 'Amikacin', 22.00, 54, 'Medsafe NZ', 'Pack');
+INSERT INTO `drug` VALUES (10, 'Gentamicin', 16.00, 64, 'Medsafe NZ', 'Pack');
+INSERT INTO `drug` VALUES (11, 'Erythromycin', 10.00, 76, 'Pharmac', 'Pack');
+INSERT INTO `drug` VALUES (12, 'Azithromycin', 15.00, 52, 'Pharmac', 'Pack');
+INSERT INTO `drug` VALUES (13, 'Clindamycin', 19.00, 21, 'Pharmac', 'Pack');
+INSERT INTO `drug` VALUES (14, 'Co-trimoxazole', 8.00, 54, 'Pharmac', 'Pack');
+INSERT INTO `drug` VALUES (15, 'Norfloxacin', 17.00, 33, 'Pharmac', 'Pack');
+INSERT INTO `drug` VALUES (16, 'Levofloxacin', 21.00, 43, 'Pharmac', 'Pack');
+INSERT INTO `drug` VALUES (17, 'Paracetamol', 4.50, 40, 'Pharmacy Brands', 'Box');
 
 -- ----------------------------
 -- Table structure for orders
@@ -181,7 +185,7 @@ CREATE TABLE `orders`  (
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES (3989, 2000, 1000, 'Severe cold', '2023-07-27 08:30-09:30', '2023-07-27 22:26:5', 1, 'Penicillin*23(CNY)*1 Oxacillin*11(CNY)*1  Drug total 34 CNY ', 'CT*435(CNY)  Exam total 435 CNY ', 469.00, 0, NULL);
+INSERT INTO `orders` VALUES (3989, 2000, 1000, 'Influenza-like illness', '2023-07-27 08:30-09:30', '2023-07-27 22:26:5', 1, 'Amoxicillin*13(NZD)*1 Paracetamol*4.5(NZD)*1  Drug total 17.5 NZD ', 'CBC*45(NZD)  Exam total 45 NZD ', 62.50, 0, 'Rest, fluids, review in 48 hours if fever persists');
 
 -- ----------------------------
 -- Table structure for patient
@@ -205,6 +209,7 @@ CREATE TABLE `patient`  (
 -- Records of patient
 -- ----------------------------
 INSERT INTO `patient` VALUES (-1, NULL, NULL, NULL, NULL, NULL, NULL, 1, '1997-01-20', 1);
-INSERT INTO `patient` VALUES (2000, '3d7dd7b26500bd0595573b651d0080fd', 'Patient Xu', 'Male', '15977777777', '551222200201013333', '789@qq.com', 1, '2023-07-27', 21);
+INSERT INTO `patient` VALUES (2000, '3d7dd7b26500bd0595573b651d0080fd', 'Liam Thompson', 'Male', '027 555 0142', 'ZZZ0016', 'liam.thompson@gmail.com', 1, '2004-03-18', 22);
+INSERT INTO `patient` VALUES (2001, '3d7dd7b26500bd0595573b651d0080fd', 'Aroha Williams', 'Female', '022 555 0143', 'ZZZ0024', 'aroha.williams@gmail.com', 1, '1998-11-05', 27);
 
 SET FOREIGN_KEY_CHECKS = 1;

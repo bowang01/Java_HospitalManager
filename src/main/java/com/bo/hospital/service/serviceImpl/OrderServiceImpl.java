@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bo.hospital.mapper.OrderMapper;
 import com.bo.hospital.pojo.Orders;
 import com.bo.hospital.service.OrderService;
+import com.bo.hospital.utils.InputLengthValidator;
 import com.bo.hospital.utils.RandomUtil;
 import com.bo.hospital.utils.TodayUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public HashMap<String, Object> findAllOrders(int pageNumber, int size, String query) {
+        InputLengthValidator.checkQuery(query);
         Page<Orders> page = new Page<>(pageNumber, size);
         QueryWrapper<Orders> wrapper = new QueryWrapper<>();
         wrapper.like("p_id", query);
@@ -55,6 +57,8 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public Boolean addOrder(Orders order, String arId){
+        InputLengthValidator.checkOrders(order);
+        InputLengthValidator.check("schedule id", arId, InputLengthValidator.SHORT_TEXT);
         // Redis start
         Jedis jedis = jedisPool.getResource();
         String time = order.getOStart().substring(11, 22);
@@ -112,6 +116,7 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public List<Orders> findOrderByNull(int dId, String oStart){
+        InputLengthValidator.check("start time", oStart, InputLengthValidator.DATE);
         return this.orderMapper.findOrderByNull(dId, oStart);
     }
     /**
@@ -119,6 +124,7 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public Boolean updateOrder(Orders orders) {
+        InputLengthValidator.checkOrders(orders);
         orders.setOState(1);
         orders.setOEnd(TodayUtil.getToday());
         QueryWrapper<Orders> wrapper = new QueryWrapper<>();
@@ -146,6 +152,7 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public HashMap<String, Object> findOrderFinish(int pageNumber, int size, String query, int dId){
+        InputLengthValidator.checkQuery(query);
         Page<Orders> page = new Page<>(pageNumber, size);
         QueryWrapper<Orders> wrapper = new QueryWrapper<>();
         wrapper.like("p_id", query).eq("d_id", dId).orderByDesc("o_start").eq("o_state", 1);
@@ -162,6 +169,7 @@ public class OrderServiceImpl implements OrderService {
      * Find appointments by dId
      */
     public HashMap<String, Object> findOrderByDid(int pageNumber, int size, String query, int dId){
+        InputLengthValidator.checkQuery(query);
         Page<Orders> page = new Page<>(pageNumber, size);
         QueryWrapper<Orders> wrapper = new QueryWrapper<>();
         wrapper.like("p_id", query).eq("d_id", dId).orderByDesc("o_start");
@@ -197,6 +205,7 @@ public class OrderServiceImpl implements OrderService {
      * Add diagnosis and doctor notes
      */
     public Boolean updateOrderByAdd(Orders order){
+        InputLengthValidator.checkOrders(order);
 
         if (this.orderMapper.updateOrderByAdd(order) == 0){
             return false;
@@ -221,6 +230,7 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public HashMap<String, String> findOrderTime(String arId){
+        InputLengthValidator.check("schedule id", arId, InputLengthValidator.SHORT_TEXT);
         Jedis jedis = jedisPool.getResource();
         HashMap<String, String> map = (HashMap<String, String>) jedis.hgetAll(arId);
 

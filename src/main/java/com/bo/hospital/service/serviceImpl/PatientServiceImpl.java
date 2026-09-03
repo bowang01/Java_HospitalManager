@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bo.hospital.mapper.PatientMapper;
 import com.bo.hospital.pojo.Patient;
 import com.bo.hospital.service.PatientService;
+import com.bo.hospital.utils.InputLengthValidator;
 import com.bo.hospital.utils.Md5Util;
 import com.bo.hospital.utils.TodayUtil;
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ public class PatientServiceImpl implements PatientService {
      */
     @Override
     public Patient login(int pId, String pPassword) {
+        InputLengthValidator.check("password", pPassword, InputLengthValidator.PASSWORD);
         Patient patient = this.patientMapper.selectById(pId);
         if (patient == null || 0 == patient.getPState()) {
             return null;
@@ -46,6 +48,7 @@ public class PatientServiceImpl implements PatientService {
      */
     @Override
     public HashMap<String, Object> findAllPatients(int pageNumber, int size, String query) {
+        InputLengthValidator.checkQuery(query);
         Page<Patient> page = new Page<>(pageNumber, size);
         QueryWrapper<Patient> wrapper = new QueryWrapper<>();
         wrapper.like("p_name", query).eq("p_state", 1);
@@ -85,6 +88,7 @@ public class PatientServiceImpl implements PatientService {
      */
     @Override
     public Boolean addPatient(Patient patient) {
+        InputLengthValidator.checkPatient(patient);
         // return false if account already exists
         List<Patient> patients = this.patientMapper.selectList(null);
         for (Patient patient1 : patients) {

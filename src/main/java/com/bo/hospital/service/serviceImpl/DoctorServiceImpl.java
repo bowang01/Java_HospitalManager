@@ -12,6 +12,7 @@ import com.bo.hospital.mapper.DoctorMapper;
 import com.bo.hospital.pojo.Arrange;
 import com.bo.hospital.pojo.Doctor;
 import com.bo.hospital.service.DoctorService;
+import com.bo.hospital.utils.InputLengthValidator;
 import com.bo.hospital.utils.Md5Util;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,7 @@ public class DoctorServiceImpl implements DoctorService {
      * */
     @Override
     public Doctor login(int dId, String dPassword){
+        InputLengthValidator.check("password", dPassword, InputLengthValidator.PASSWORD);
         Doctor doctor = this.doctorMapper.selectById(dId);
         String password = Md5Util.getMD5(dPassword);
         if (doctor == null) {
@@ -54,6 +56,7 @@ public class DoctorServiceImpl implements DoctorService {
      */
     @Override
     public HashMap<String, Object> findAllDoctors(int pageNumber, int size, String query) {
+        InputLengthValidator.checkQuery(query);
         Page<Doctor> page = new Page<>(pageNumber, size);
         QueryWrapper<Doctor> wrapper = new QueryWrapper<>();
         wrapper.like("d_name", query).eq("d_state", 1);
@@ -79,6 +82,7 @@ public class DoctorServiceImpl implements DoctorService {
      */
     @Override
     public Boolean addDoctor(Doctor doctor) {
+        InputLengthValidator.checkDoctor(doctor);
         // return false if account already exists
         List<Doctor> doctors = this.doctorMapper.selectList(null);
         for (Doctor doctor1 : doctors) {
@@ -113,6 +117,7 @@ public class DoctorServiceImpl implements DoctorService {
      */
     @Override
     public Boolean modifyDoctor(Doctor doctor) {
+        InputLengthValidator.checkDoctor(doctor);
 //        QueryWrapper<Doctor> queryWrapper = new QueryWrapper<>();
 //        queryWrapper.eq("d_id", doctor.getDId());
 //        this.doctorMapper.update(doctor, queryWrapper);
@@ -125,6 +130,7 @@ public class DoctorServiceImpl implements DoctorService {
      */
     @Override
     public HashMap<String, Object> findDoctorBySection(String dSection){
+        InputLengthValidator.check("department", dSection, InputLengthValidator.SHORT_TEXT);
 //        HashMap<String, Object> hashMap = new HashMap<>();
 //        QueryWrapper<Doctor> queryWrapper = new QueryWrapper<>();
 //        queryWrapper.eq("d_section", dSection).eq("d_state", 1);
@@ -139,6 +145,9 @@ public class DoctorServiceImpl implements DoctorService {
      */
     @Override
     public HashMap<String, Object> findDoctorBySectionPage(int pageNumber, int size, String query, String arrangeDate, String dSection) {
+        InputLengthValidator.checkQuery(query);
+        InputLengthValidator.check("schedule date", arrangeDate, InputLengthValidator.DATE);
+        InputLengthValidator.check("department", dSection, InputLengthValidator.SHORT_TEXT);
         Page<Doctor> page = new Page<>(pageNumber, size);
         QueryWrapper<Doctor> wrapper = new QueryWrapper<>();
         wrapper.select("d_id", "d_name", "d_gender", "d_post", "d_section").like("d_name", query).eq("d_section", dSection).orderByDesc("d_state");

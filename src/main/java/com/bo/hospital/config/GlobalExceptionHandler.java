@@ -1,5 +1,7 @@
 package com.bo.hospital.config;
 
+import com.bo.hospital.exception.InputLimitException;
+import com.bo.hospital.utils.ResponseData;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -8,6 +10,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(InputLimitException.class)
+    @ResponseBody
+    public ResponseData handleInputLimit(InputLimitException e) {
+        return ResponseData.fail(e.getMessage());
+    }
 
     @ExceptionHandler(value =Exception.class)
     @ResponseBody

@@ -3,6 +3,7 @@ package com.bo.hospital.service.serviceImpl;
 import com.bo.hospital.service.ArrangeService;
 import com.bo.hospital.mapper.ArrangeMapper;
 import com.bo.hospital.pojo.Arrange;
+import com.bo.hospital.utils.InputLengthValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
@@ -23,12 +24,15 @@ public class ArrangeServiceImpl implements ArrangeService {
      */
     @Override
     public List<Arrange> findByTime(String arTime, String dSection) {
+        InputLengthValidator.check("schedule date", arTime, InputLengthValidator.DATE);
+        InputLengthValidator.check("department", dSection, InputLengthValidator.SHORT_TEXT);
         return this.arrangeMapper.findByTime(arTime, dSection);
     }
     /**
      * Add schedule
      */
     public Boolean addArrange(Arrange arrange){
+        InputLengthValidator.checkArrange(arrange);
         Arrange arrange1 = this.arrangeMapper.selectById(arrange.getArId());
         Jedis jedis = jedisPool.getResource();
         HashMap<String, String> map = new HashMap<>();
@@ -55,6 +59,7 @@ public class ArrangeServiceImpl implements ArrangeService {
      * Delete schedule
      */
     public Boolean deleteArrange(String arId){
+        InputLengthValidator.check("schedule id", arId, InputLengthValidator.SHORT_TEXT);
         Arrange arrange = this.arrangeMapper.selectById(arId);
         Jedis jedis = jedisPool.getResource();
         if (arrange != null) {

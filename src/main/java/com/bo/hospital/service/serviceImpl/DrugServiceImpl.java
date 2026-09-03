@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bo.hospital.mapper.DrugMapper;
 import com.bo.hospital.pojo.Drug;
 import com.bo.hospital.service.DrugService;
+import com.bo.hospital.utils.InputLengthValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class DrugServiceImpl implements DrugService {
      */
     @Override
     public HashMap<String, Object> findAllDrugs(int pageNumber, int size, String query){
+        InputLengthValidator.checkQuery(query);
         Page<Drug> page = new Page<>(pageNumber, size);
         QueryWrapper<Drug> wrapper = new QueryWrapper<>();
         wrapper.like("dr_name", query);
@@ -56,6 +58,7 @@ public class DrugServiceImpl implements DrugService {
      * Add drug
      */
     public Boolean addDrug(Drug drug){
+        InputLengthValidator.checkDrug(drug);
         // return false if account already exists
         List<Drug> drugs = this.drugMapper.selectList(null);
         for (Drug drug1 : drugs) {
@@ -79,6 +82,7 @@ public class DrugServiceImpl implements DrugService {
      */
     @Override
     public Boolean modifyDrug(Drug drug) {
+        InputLengthValidator.checkDrug(drug);
         int i = this.drugMapper.updateById(drug);
         System.out.println("affected rows: "+i);
         return true;
