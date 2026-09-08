@@ -17,6 +17,7 @@ public final class InputLengthValidator {
     public static final int PASSWORD = 64;
     public static final int GENDER = 20;
     public static final int DATE = 32;
+    public static final int START_TIME = 64;
     public static final int SHORT_TEXT = 50;
     public static final int TEXT = 255;
     public static final int QUERY = 50;
@@ -72,7 +73,7 @@ public final class InputLengthValidator {
             return;
         }
         check("diagnosis", orders.getORecord(), TEXT);
-        check("start time", orders.getOStart(), DATE);
+        check("start time", orders.getOStart(), START_TIME);
         check("end time", orders.getOEnd(), DATE);
         check("drugs", orders.getODrug(), TEXT);
         check("exams", orders.getOCheck(), TEXT);
